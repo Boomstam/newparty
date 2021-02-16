@@ -27,15 +27,26 @@ public class HomeController {
         return "error";
     }
 
-    /*@GetMapping({"/venuedetails", "/venuedetails/{venueName}"})
-    public String venueDetails(Model model, @PathVariable(required = false) String venueName) {
-        model.addAttribute("venuename", venueName==null ? "--no venue specified--" : venueName);
-        return "venuedetails";
-    }*/
-
     @GetMapping({"/venuedetails", "/venuedetails/{venueName}"})
     public String venueDetails(Model model, @PathVariable(required = false) String venueName) {
         model.addAttribute("venuename", venueName);
+        return "venuedetails";
+    }
+
+    @GetMapping({"/venuedetailsbyindex", "/venuedetailsbyindex/{venueIndex}"})
+    public String venueDetailsByIndex(Model model, @PathVariable(required = false) String venueIndex) {
+        try {
+            int venueIndexVal = Integer.parseInt(venueIndex);
+
+            if(venueIndexVal >= 0 && venueIndexVal < venueNames.length){
+                String venueName = venueNames[venueIndexVal];
+                model.addAttribute("venuename", venueName);
+            }
+        }
+        catch (NumberFormatException e)
+        {
+            // This error is handled in the html.
+        }
         return "venuedetails";
     }
 
