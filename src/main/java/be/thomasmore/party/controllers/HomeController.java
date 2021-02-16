@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class HomeController {
     private final int mySpecialNumber = 729;
+    private final String[] venueNames = { "De Club", "De Loods", "Zapoi", "Nekkerhal"};
 
     @GetMapping({"/", "home"})
     public String home(Model model) {
@@ -26,12 +27,6 @@ public class HomeController {
         return "error";
     }
 
-    /*@GetMapping("/venuedetails/{venueName}")
-    public String venueDetails(Model model, @PathVariable String venueName) {
-        model.addAttribute("venuename", venueName);
-        return "venuedetails";
-    }*/
-
     @GetMapping({"/venuedetails", "/venuedetails/{venueName}"})
     public String venueDetails(Model model, @PathVariable(required = false) String venueName) {
         model.addAttribute("venuename", venueName==null ? "--no venue specified--" : venueName);
@@ -39,7 +34,8 @@ public class HomeController {
     }
 
     @GetMapping("/venuelist")
-    public String venueList() {
+    public String venueList(Model model) {
+        model.addAttribute("venues", venueNames);
         return "venuelist";
     }
 }
