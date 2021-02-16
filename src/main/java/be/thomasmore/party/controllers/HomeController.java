@@ -27,9 +27,15 @@ public class HomeController {
         return "error";
     }
 
-    @GetMapping({"/venuedetails", "/venuedetails/{venueName}"})
+    /*@GetMapping({"/venuedetails", "/venuedetails/{venueName}"})
     public String venueDetails(Model model, @PathVariable(required = false) String venueName) {
         model.addAttribute("venuename", venueName==null ? "--no venue specified--" : venueName);
+        return "venuedetails";
+    }*/
+
+    @GetMapping({"/venuedetails", "/venuedetails/{venueName}"})
+    public String venueDetails(Model model, @PathVariable(required = false) String venueName) {
+        model.addAttribute("venuename", venueName);
         return "venuedetails";
     }
 
