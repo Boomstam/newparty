@@ -1,5 +1,6 @@
 <body>
 <div>
+    <div th:replace="fragments/header :: header">Hier komt de header</div>
     <div class="nav">
         <h1>Let's Party!</h1>
         <div class="navbuttons">
@@ -11,5 +12,6 @@
             <h2 th:text="|venue: ${venuename}|">venue: onbekend</h2>
         </div>
     </div>
+    <div th:replace="fragments/footer :: footer">Hier komt de footer</div>
 </div>
 </body>

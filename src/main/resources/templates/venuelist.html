@@ -7,8 +7,10 @@
           th:href="@{/css/styles.css}" href="/css/styles.css" />
 </head>
 <body>
+<div th:replace="fragments/header :: header">Hier komt de header</div>
 <a th:href="@{/venuedetails/eersteLocatie}">eersteLocatie</a>
 <a th:href="@{/venuedetails/tweedeLocatie}">tweedeLocatie</a>
 <a th:href="@{/venuedetails/derdeLocatie}">derdeLocatie</a>
+<div th:replace="fragments/footer :: footer">Hier komt de footer</div>
 </body>
 </html>
