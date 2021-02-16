@@ -7,18 +7,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class HomeController {
-    private final int mySpecialNumber = 729;
     private final String[] venueNames = { "De Club", "De Loods", "Zapoi", "Nekkerhal"};
 
     @GetMapping({"/", "home"})
     public String home(Model model) {
-        model.addAttribute("mijnSpeciaalNummer", mySpecialNumber);
         return "home";
     }
 
     @GetMapping("/about")
     public String about(Model model){
-        model.addAttribute("mijnSpeciaalNummer", mySpecialNumber);
         return "about";
     }
 
