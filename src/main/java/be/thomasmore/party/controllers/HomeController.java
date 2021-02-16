@@ -3,6 +3,7 @@ package be.thomasmore.party.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class HomeController {
@@ -23,5 +24,11 @@ public class HomeController {
     @GetMapping("/error")
     public String error(){
         return "error";
+    }
+
+    @GetMapping("/venuedetails/{venueName}")
+    public String venueDetails(Model model, @PathVariable String venueName) {
+        model.addAttribute("venuename", venueName);
+        return "venuedetails";
     }
 }
