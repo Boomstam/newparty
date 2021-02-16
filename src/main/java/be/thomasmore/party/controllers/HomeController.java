@@ -23,53 +23,45 @@ public class HomeController {
     }
 
     @GetMapping("/error")
-    public String error(){
+    public String error() {
         return "error";
-    }
-
-    /*@GetMapping({"/venuedetails", "/venuedetails/{venueName}"})
-    public String venueDetails(Model model, @PathVariable(required = false) String venueName) {
-        model.addAttribute("venuename", venueName);
-        return "venuedetails";
-    }
-
-    @GetMapping({"/venuedetailsbyindex", "/venuedetailsbyindex/{venueIndex}"})
-    public String venueDetailsByIndex(Model model, @PathVariable(required = false) String venueIndex) {
-        try {
-            int venueIndexVal = Integer.parseInt(venueIndex);
-
-            if(venueIndexVal >= 0 && venueIndexVal < venueNames.length){
-                String venueName = venueNames[venueIndexVal];
-                model.addAttribute("venuename", venueName);
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            // This error is handled in the html.
-        }
-        return "venuedetails";
-    }*/
-
-    @GetMapping({"/venuedetails", "/venuedetails/{venueIndex}"})
-    public String venueDetails(Model model, @PathVariable(required = false) String venueIndex) {
-        try {
-            int venueIndexVal = Integer.parseInt(venueIndex);
-
-            if(venueIndexVal >= 0 && venueIndexVal < venueNames.length){
-                String venueName = venueNames[venueIndexVal];
-                model.addAttribute("venuename", venueName);
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            // This error is handled in the html.
-        }
-        return "venuedetails";
     }
 
     @GetMapping("/venuelist")
     public String venueList(Model model) {
         model.addAttribute("venues", venueNames);
         return "venuelist";
+    }
+
+    @GetMapping({"/venuedetails", "/venuedetails/{venueIndex}"})
+    public String venueDetails(Model model, @PathVariable(required = false) String venueIndex) {
+        try {
+            int venueIndexVal = Integer.parseInt(venueIndex);
+            int numNames = venueNames.length;
+            if(venueIndexVal >= 0 && venueIndexVal < numNames){
+                addVenueDetailsAttributes(model, venueIndexVal, numNames);
+            }
+        }
+        catch (NumberFormatException e)
+        {
+            // This error is handled in the html.
+        }
+        return "venuedetails";
+    }
+
+    private void addVenueDetailsAttributes(Model model, int venueIndex, int numNames) {
+        model.addAttribute("venueindex", venueIndex);
+        String venueName = venueNames[venueIndex];
+        model.addAttribute("venuename", venueName);
+        int prevIndex = venueIndex - 1;
+        int nextIndex = venueIndex + 1;
+        if(prevIndex == -1){
+            prevIndex = numNames - 1;
+        }
+        if(nextIndex == numNames){
+            nextIndex = 0;
+        }
+        model.addAttribute("previndex", prevIndex);
+        model.addAttribute("nextindex", nextIndex);
     }
 }
