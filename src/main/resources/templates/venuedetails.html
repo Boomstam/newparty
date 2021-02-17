@@ -1,18 +1,22 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>About</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/styles.css}" href="/css/styles.css" />
+</head>
 <body>
 <div>
     <div th:replace="fragments/header :: header">Hier komt de header</div>
-    <div class="nav">
-        <h1>Venue Details</h1>
-        <div class="navbuttons">
-            <a href="/home">home</a>
-        </div>
-    </div>
+    <div class="pageContent">
     <div class="row1">
         <div class="row1content">
             <div th:if="${venuename}">
                 <h2 th:text="|venue: ${venuename}|">venue: onbekend</h2>
-                <a th:href="@{|/venuedetails/${previndex}|}">Prev</a>
-                <a th:href="@{|/venuedetails/${nextindex}|}">Next</a>
+                <div class="cycleButtons">
+                <a class="buttonLook menuButton" th:href="@{|/venuedetails/${previndex}|}">Prev</a>
+                <a class="buttonLook menuButton" th:href="@{|/venuedetails/${nextindex}|}">Next</a>
+                </div>
             </div>
             <p th:unless="${venuename}">venue: onbekend</p>
             <!--
@@ -29,6 +33,7 @@
             Best to calculate boundaries in java!
             -->
         </div>
+    </div>
     </div>
     <div th:replace="fragments/footer :: footer">Hier komt de footer</div>
 </div>

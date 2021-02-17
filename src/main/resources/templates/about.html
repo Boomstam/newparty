@@ -8,8 +8,13 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header">Hier komt de header</div>
-<h1>About</h1>
+<div class="pageContent">
+<h2>About</h2>
+<p>Dit gaat over de applicatie</p>
+</div>
+<!--
 <a th:href="@{/home}">home</a>
+-->
 <div th:replace="fragments/footer :: footer">Hier komt de footer</div>
 </body>
 </html>
