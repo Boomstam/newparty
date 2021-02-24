@@ -129,6 +129,10 @@ public class Venue {
         this.distanceFromPublicTransportInKm = distanceFromPublicTransportInKm;
     }
 
+    public boolean isValid(){
+        return city == null;
+    }
+
     private String boolAsYesOrNo(boolean bool){
         return bool ? trueWord : falseWord;
     }
