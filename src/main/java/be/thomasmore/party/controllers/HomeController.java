@@ -1,13 +1,19 @@
 package be.thomasmore.party.controllers;
 
 import be.thomasmore.party.model.Venue;
+import be.thomasmore.party.repositories.VenueRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Optional;
+
 @Controller
 public class HomeController {
+    @Autowired
+    private VenueRepository venueRepository;
     private final Venue[] venues = {
             new Venue("De Club", "http://declubinfo"),
             new Venue("De Loods", "http://deloodsinfo"),
@@ -30,8 +36,14 @@ public class HomeController {
         return "error";
     }
 
+    /*@GetMapping("/venuelist")
+    public String venueList(Model model) {
+        model.addAttribute("venues", venues);
+        return "venuelist";
+    }*/
     @GetMapping("/venuelist")
     public String venueList(Model model) {
+        Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
         return "venuelist";
     }
@@ -42,6 +54,17 @@ public class HomeController {
         model.addAttribute("venue", venue);
         model.addAttribute("previndex", (venueId>=0 && venueId < venues.length) ? (venueId>0 ? venueId-1 : venues.length-1) : 0);
         model.addAttribute("nextindex", (venueId>=0 && venueId < venues.length) ? (venueId<venues.length-1 ? venueId+1 : 0) : venues.length-1);
+        return "venuedetails";
+    }
+
+    @GetMapping({"/venuedetailsbyid", "/venuedetailsbyid/{id}"})
+    public String venueDetailsById(Model model, @PathVariable(required = false) Integer id) {
+        Optional<Venue> venue = venueRepository.findById(id);
+        if(venue.isPresent()){
+            model.addAttribute("venue", venue.get());
+        } else {
+            model.addAttribute("venue", new Venue());
+        }
         return "venuedetails";
     }
 }
