@@ -1,10 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Error</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/styles.css}" href="/css/styles.css" />
 </head>
 <body>
-<h1>O jee, er ging iets mis...! Deze pagina werd niet gevonden.</h1>
+<div th:replace="fragments/header :: header">Hier komt de header</div>
+<div class="pageContent">
+    <h2>Error</h2>
+    <p>O jee, er ging iets mis...! Deze pagina werd niet gevonden.</p>
+</div>
+<div th:replace="fragments/footer :: footer">Hier komt de footer</div>
 </body>
 </html>

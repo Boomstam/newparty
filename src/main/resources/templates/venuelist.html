@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>About</title>
+    <title>Venues</title>
     <link rel="stylesheet" type="text/css" media="all"
           th:href="@{/css/styles.css}" href="/css/styles.css" />
 </head>
@@ -12,21 +12,13 @@
 <div class="row1">
     <div class="row1content">
         <h2>venues</h2>
-        <div class="venuelist">
-            <!--
-            <div th:each="venue: ${venues}">
-
-                <a class="buttonLook mediumButton" th:href="@{'/venuedetails/'+${venue}}">
-                    <span th:text="${venue}">venue name</span>
-                </a>
+            <div class="venuelist">
+                <div th:each="venue, status: ${venues}">
+                    <a class="buttonLook mediumButton" th:href="@{'/venuedetails/'+${status.index}}">
+                        <span th:text="${venue.getVenueName()}">venue name</span>
+                    </a>
                 </div>
-                -->
-            <div th:each="venue, iStat: ${venues}">
-                <a class="buttonLook mediumButton" th:href="@{'/venuedetails/'+${iStat.index}}">
-                    <span th:text="${venue}">venue name</span>
-                </a>
             </div>
-        </div>
     </div>
 </div>
 </div>

@@ -1,5 +1,6 @@
 package be.thomasmore.party.controllers;
 
+import be.thomasmore.party.model.Venue;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class HomeController {
-    private final String[] venueNames = { "De Club", "De Loods", "Zapoi", "Nekkerhal"};
+    private final Venue[] venues = {
+            new Venue("De Club", "http://declubinfo"),
+            new Venue("De Loods", "http://deloodsinfo"),
+            new Venue("Zapoi", "http://zapoiinfo"),
+            new Venue("Nekkerhal", "http://nekkerhalinfo")
+    };
 
     @GetMapping({"/", "home"})
     public String home(Model model) {
@@ -26,39 +32,16 @@ public class HomeController {
 
     @GetMapping("/venuelist")
     public String venueList(Model model) {
-        model.addAttribute("venues", venueNames);
+        model.addAttribute("venues", venues);
         return "venuelist";
     }
 
-    @GetMapping({"/venuedetails", "/venuedetails/{venueIndex}"})
-    public String venueDetails(Model model, @PathVariable(required = false) String venueIndex) {
-        try {
-            int venueIndexVal = Integer.parseInt(venueIndex);
-            int numNames = venueNames.length;
-            if(venueIndexVal >= 0 && venueIndexVal < numNames){
-                addVenueDetailsAttributes(model, venueIndexVal, numNames);
-            }
-        }
-        catch (NumberFormatException e)
-        {
-            // This error is handled in the html.
-        }
+    @GetMapping({"/venuedetails", "/venuedetails/{venueId}"})
+    public String venueDetails(Model model, @PathVariable(required = false) Integer venueId) {
+        Venue venue = (venueId>=0 && venueId < venues.length) ? venues[venueId] : new Venue();
+        model.addAttribute("venue", venue);
+        model.addAttribute("previndex", (venueId>=0 && venueId < venues.length) ? (venueId>0 ? venueId-1 : venues.length-1) : 0);
+        model.addAttribute("nextindex", (venueId>=0 && venueId < venues.length) ? (venueId<venues.length-1 ? venueId+1 : 0) : venues.length-1);
         return "venuedetails";
-    }
-
-    private void addVenueDetailsAttributes(Model model, int venueIndex, int numNames) {
-        model.addAttribute("venueindex", venueIndex);
-        String venueName = venueNames[venueIndex];
-        model.addAttribute("venuename", venueName);
-        int prevIndex = venueIndex - 1;
-        int nextIndex = venueIndex + 1;
-        if(prevIndex == -1){
-            prevIndex = numNames - 1;
-        }
-        if(nextIndex == numNames){
-            nextIndex = 0;
-        }
-        model.addAttribute("previndex", prevIndex);
-        model.addAttribute("nextindex", nextIndex);
     }
 }
