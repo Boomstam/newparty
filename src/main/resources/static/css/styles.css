@@ -99,3 +99,7 @@ img{
     margin-top:var(--pageContentTopMargin);
     margin-left:var(--pageContentLeftMargin);
 }
+
+.infoLine p:first-child{
+    float: left;
+}

@@ -11,9 +11,40 @@
     <div class="pageContent">
     <div class="row1">
         <div class="row1content">
-            <div th:if="${venue.venueName}">
-                <h2 th:text="|venue: ${venue.venueName}|">venue onbekend</h2>
-                <!--<h2 th:if="${venue}" th:text="|venue: ${venue.venueName}|">venue: onbekend</h2>-->
+            <div>
+                <h2 th:text="|venue: ${venue.venueName}|"/>
+                <div class="infoLine">
+                    <p th:text="|Info:|"/>
+                    <a th:href="|${venue.linkMoreInfo}|" th:text="|${venue.linkMoreInfo}|"/>
+                </div>
+                <div class="infoLine">
+                    <p th:text="|Capacity:|"/>
+                    <p th:text="|${venue.capacity}|"/>
+                </div>
+                <div class="infoLine">
+                    <p th:text="|Food provided:|"/>
+                    <p th:text="|${venue.isFoodProvidedYesOrNo()}|"/>
+                </div>
+                <div class="infoLine">
+                    <p th:text="|Indoor?:|"/>
+                    <p th:text="|${venue.isIndoorYesOrNo()}|"/>
+                </div>
+                <div class="infoLine">
+                    <p th:text="|Outdoor?:|"/>
+                    <p th:text="|${venue.isOutdoorYesOrNo()}|"/>
+                </div>
+                <div class="infoLine">
+                    <p th:text="|Free parking available?:|"/>
+                    <p th:text="|${venue.isFreeParkingAvailableYesOrNo()}|"/>
+                </div>
+                <div class="infoLine">
+                    <p th:text="|Distance to public transport in km:|"/>
+                    <p th:text="|${venue.distanceFromPublicTransportInKm}|"/>
+                </div>
+                <div class="infoLine">
+                    <p th:text="|City:|"/>
+                    <p th:text="|${venue.city}|"/>
+                </div>
                 <div class="cycleButtons">
                 <a class="buttonLook menuButton" th:href="@{|/venuedetails/${previndex}|}">Prev</a>
                 <a class="buttonLook menuButton" th:href="@{|/venuedetails/${nextindex}|}">Next</a>
