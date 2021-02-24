@@ -48,14 +48,14 @@ public class HomeController {
         return "venuelist";
     }
 
-    @GetMapping({"/venuedetails", "/venuedetails/{venueId}"})
+    /*@GetMapping({"/venuedetails", "/venuedetails/{venueId}"})
     public String venueDetails(Model model, @PathVariable(required = false) Integer venueId) {
         Venue venue = (venueId>=0 && venueId < venues.length) ? venues[venueId] : new Venue();
         model.addAttribute("venue", venue);
         model.addAttribute("previndex", (venueId>=0 && venueId < venues.length) ? (venueId>0 ? venueId-1 : venues.length-1) : 0);
         model.addAttribute("nextindex", (venueId>=0 && venueId < venues.length) ? (venueId<venues.length-1 ? venueId+1 : 0) : venues.length-1);
         return "venuedetails";
-    }
+    }*/
 
     @GetMapping({"/venuedetailsbyid", "/venuedetailsbyid/{id}"})
     public String venueDetailsById(Model model, @PathVariable(required = false) Integer id) {
@@ -65,6 +65,9 @@ public class HomeController {
         } else {
             model.addAttribute("venue", new Venue());
         }
+        int numVenues = (int)venueRepository.count();
+        model.addAttribute("previd", (id>=1 && id <= numVenues) ? (id>1 ? id-1 : numVenues) : 1);
+        model.addAttribute("nextid", (id>=1 && id <= numVenues) ? (id<numVenues ? id+1 : 1) : numVenues);
         return "venuedetails";
     }
 }
