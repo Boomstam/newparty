@@ -17,15 +17,31 @@
                 <p>Outdoor: </p>
                 <!-- For some reason '.equals' instead of '==' throws an error. '==' works though.-->
                 <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/yes'}"
-                   th:classappend="|${filter == 'yes' ? 'activeButton' : ''}|">
+                   th:classappend="|${outdoorFilter == 'yes' ? 'activeButton' : ''}|">
                     <span>Yes</span>
                 </a>
                 <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/no'}"
-                   th:classappend="|${filter == 'no' ? 'activeButton' : ''}|">
+                   th:classappend="|${outdoorFilter == 'no' ? 'activeButton' : ''}|">
                     <span>No</span>
                 </a>
                 <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/all'}"
-                   th:classappend="|${filter == 'all' ? 'activeButton' : ''}|">
+                   th:classappend="|${outdoorFilter == 'all' ? 'activeButton' : ''}|">
+                    <span>All</span>
+                </a>
+            </div>
+            <div class="indoorButtons">
+                <p>Indoor: </p>
+                <!-- For some reason '.equals' instead of '==' throws an error. '==' works though.-->
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/indoor/yes'}"
+                   th:classappend="|${indoorFilter == 'yes' ? 'activeButton' : ''}|">
+                    <span>Yes</span>
+                </a>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/indoor/no'}"
+                   th:classappend="|${indoorFilter == 'no' ? 'activeButton' : ''}|">
+                    <span>No</span>
+                </a>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/indoor/all'}"
+                   th:classappend="|${indoorFilter == 'all' ? 'activeButton' : ''}|">
                     <span>All</span>
                 </a>
             </div>

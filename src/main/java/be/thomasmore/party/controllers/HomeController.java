@@ -44,13 +44,17 @@ public class HomeController {
     public String venueList(Model model) {
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
-        model.addAttribute("filter", "all");
+        model.addAttribute("outdoorFilter", "all");
+        model.addAttribute("indoorFilter", "all");
         return "venuelist";
     }
 
-    @GetMapping("/venuelist/outdoor/{filter}")
+    @GetMapping({"/venuelist/outdoor", "/venuelist/outdoor/{filter}"})
     public String venueListOutdoorYesOrNo(Model model, @PathVariable(required = false) String filter) {
         Iterable<Venue> venues;
+        if(filter == null){
+            filter = "all";
+        }
         if(filter.equals("yes")){
             venues = venueRepository.findByOutdoor(true);
         } else if(filter.equals("no")){
@@ -60,7 +64,26 @@ public class HomeController {
             filter = "all";
         }
         model.addAttribute("venues", venues);
-        model.addAttribute("filter", filter);
+        model.addAttribute("outdoorFilter", filter);
+        return "venuelist";
+    }
+
+    @GetMapping({"/venuelist/indoor", "/venuelist/indoor/{filter}"})
+    public String venueListIndoorYesOrNo(Model model, @PathVariable(required = false) String filter) {
+        Iterable<Venue> venues;
+        if(filter == null){
+            filter = "all";
+        }
+        if(filter.equals("yes")){
+            venues = venueRepository.findByIndoor(true);
+        } else if(filter.equals("no")){
+            venues = venueRepository.findByIndoor(false);
+        } else {
+            venues = venueRepository.findAll();
+            filter = "all";
+        }
+        model.addAttribute("venues", venues);
+        model.addAttribute("indoorFilter", filter);
         return "venuelist";
     }
 
