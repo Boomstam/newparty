@@ -12,6 +12,24 @@
 <div class="row1">
     <div class="row1content">
         <h2>Venues</h2>
+        <div class="filterButtons">
+            <div class="outdoorButtons">
+                <p>Outdoor: </p>
+                <!-- For some reason '.equals' instead of '==' throws an error. '==' works though.-->
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/yes'}"
+                   th:classappend="|${filter == 'yes' ? 'activeButton' : ''}|">
+                    <span>Yes</span>
+                </a>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/no'}"
+                   th:classappend="|${filter == 'no' ? 'activeButton' : ''}|">
+                    <span>No</span>
+                </a>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/all'}"
+                   th:classappend="|${filter == 'all' ? 'activeButton' : ''}|">
+                    <span>All</span>
+                </a>
+            </div>
+        </div>
             <div class="venuelist">
                 <div th:each="venue, status: ${venues}">
                     <a class="buttonLook mediumButton" th:href="@{'/venuedetails/'+${status.index + 1}}">

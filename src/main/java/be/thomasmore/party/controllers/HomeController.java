@@ -44,6 +44,23 @@ public class HomeController {
     public String venueList(Model model) {
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
+        model.addAttribute("filter", "all");
+        return "venuelist";
+    }
+
+    @GetMapping("/venuelist/outdoor/{filter}")
+    public String venueListOutdoorYesOrNo(Model model, @PathVariable(required = false) String filter) {
+        Iterable<Venue> venues;
+        if(filter.equals("yes")){
+            venues = venueRepository.findByOutdoor(true);
+        } else if(filter.equals("no")){
+            venues = venueRepository.findByOutdoor(false);
+        } else {
+            venues = venueRepository.findAll();
+            filter = "all";
+        }
+        model.addAttribute("venues", venues);
+        model.addAttribute("filter", filter);
         return "venuelist";
     }
 

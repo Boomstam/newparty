@@ -103,3 +103,20 @@ img{
 .infoLine p:first-child{
     float: left;
 }
+
+.filterButton{
+    display: inline-block;
+}
+
+.filterButtons div p{
+    float: left;
+    margin-top:5px;
+}
+
+.filterButtons div a{
+    padding: 5px;
+}
+
+.activeButton{
+    background-color: #F1A5B5;
+}
