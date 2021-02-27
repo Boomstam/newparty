@@ -24,6 +24,7 @@ public class HomeController {
             new Venue("Zapoi", "http://zapoiinfo"),
             new Venue("Nekkerhal", "http://nekkerhalinfo")
     };
+    private String outdoorFilter = "all", indoorFilter = "all", capacityFilter = "all";
 
     @GetMapping({"/", "home"})
     public String home(Model model) {
@@ -44,46 +45,77 @@ public class HomeController {
     public String venueList(Model model) {
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
-        model.addAttribute("outdoorFilter", "all");
-        model.addAttribute("indoorFilter", "all");
+        model.addAttribute("outdoorFilter", outdoorFilter);
+        model.addAttribute("indoorFilter", indoorFilter);
+        model.addAttribute("capacityFilter", capacityFilter);
         return "venuelist";
     }
 
-    @GetMapping({"/venuelist/outdoor", "/venuelist/outdoor/{filter}"})
-    public String venueListOutdoorYesOrNo(Model model, @PathVariable(required = false) String filter) {
+    @GetMapping({"/venuelist/outdoor", "/venuelist/outdoor/{outdoorFilter}"})
+    public String venueListOutdoorFilter(Model model, @PathVariable(required = false) String outdoorFilter) {
         Iterable<Venue> venues;
-        if(filter == null){
-            filter = "all";
+        if(outdoorFilter == null){
+            outdoorFilter = "all";
         }
-        if(filter.equals("yes")){
+        if(outdoorFilter.equals("yes")){
             venues = venueRepository.findByOutdoor(true);
-        } else if(filter.equals("no")){
+        } else if(outdoorFilter.equals("no")){
             venues = venueRepository.findByOutdoor(false);
         } else {
             venues = venueRepository.findAll();
-            filter = "all";
+            outdoorFilter = "all";
         }
         model.addAttribute("venues", venues);
-        model.addAttribute("outdoorFilter", filter);
+        model.addAttribute("outdoorFilter", outdoorFilter);
+        model.addAttribute("indoorFilter", indoorFilter);
+        model.addAttribute("capacityFilter", capacityFilter);
+        this.outdoorFilter = outdoorFilter;
         return "venuelist";
     }
 
-    @GetMapping({"/venuelist/indoor", "/venuelist/indoor/{filter}"})
-    public String venueListIndoorYesOrNo(Model model, @PathVariable(required = false) String filter) {
+    @GetMapping({"/venuelist/indoor", "/venuelist/indoor/{indoorFilter}"})
+    public String venueListIndoorFilter(Model model, @PathVariable(required = false) String indoorFilter) {
         Iterable<Venue> venues;
-        if(filter == null){
-            filter = "all";
+        if(indoorFilter == null){
+            indoorFilter = "all";
         }
-        if(filter.equals("yes")){
+        if(indoorFilter.equals("yes")){
             venues = venueRepository.findByIndoor(true);
-        } else if(filter.equals("no")){
+        } else if(indoorFilter.equals("no")){
             venues = venueRepository.findByIndoor(false);
         } else {
             venues = venueRepository.findAll();
-            filter = "all";
+            indoorFilter = "all";
         }
         model.addAttribute("venues", venues);
-        model.addAttribute("indoorFilter", filter);
+        model.addAttribute("outdoorFilter", outdoorFilter);
+        model.addAttribute("indoorFilter", indoorFilter);
+        model.addAttribute("capacityFilter", capacityFilter);
+        this.indoorFilter = indoorFilter;
+        return "venuelist";
+    }
+
+    @GetMapping({"/venuelist/capacity", "/venuelist/capacity/{capacityFilter}"})
+    public String venueListCapacityFilter(Model model, @PathVariable(required = false) String capacityFilter) {
+        Iterable<Venue> venues;
+        if(capacityFilter == null){
+            capacityFilter = "all";
+        }
+        if(capacityFilter.equals("S")){
+            venues = venueRepository.findByCapacityLessThanEqual(200);
+        } else if(capacityFilter.equals("M")){
+            venues = venueRepository.findByCapacityLessThanEqual(500);
+        } else if(capacityFilter.equals("L")){
+            venues = venueRepository.findByCapacityGreaterThan(500);
+        } else {
+            venues = venueRepository.findAll();
+            capacityFilter = "all";
+        }
+        model.addAttribute("venues", venues);
+        model.addAttribute("outdoorFilter", outdoorFilter);
+        model.addAttribute("indoorFilter", indoorFilter);
+        model.addAttribute("capacityFilter", capacityFilter);
+        this.capacityFilter = capacityFilter;
         return "venuelist";
     }
 

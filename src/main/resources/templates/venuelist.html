@@ -16,6 +16,10 @@
             <div class="outdoorButtons">
                 <p>Outdoor: </p>
                 <!-- For some reason '.equals' instead of '==' throws an error. '==' works though.-->
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/all'}"
+                   th:classappend="|${outdoorFilter == 'all' ? 'activeButton' : ''}|">
+                    <span>All</span>
+                </a>
                 <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/yes'}"
                    th:classappend="|${outdoorFilter == 'yes' ? 'activeButton' : ''}|">
                     <span>Yes</span>
@@ -24,14 +28,13 @@
                    th:classappend="|${outdoorFilter == 'no' ? 'activeButton' : ''}|">
                     <span>No</span>
                 </a>
-                <a class="buttonLook filterButton" th:href="@{'/venuelist/outdoor/all'}"
-                   th:classappend="|${outdoorFilter == 'all' ? 'activeButton' : ''}|">
-                    <span>All</span>
-                </a>
             </div>
             <div class="indoorButtons">
                 <p>Indoor: </p>
-                <!-- For some reason '.equals' instead of '==' throws an error. '==' works though.-->
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/indoor/all'}"
+                   th:classappend="|${indoorFilter == 'all' ? 'activeButton' : ''}|">
+                    <span>All</span>
+                </a>
                 <a class="buttonLook filterButton" th:href="@{'/venuelist/indoor/yes'}"
                    th:classappend="|${indoorFilter == 'yes' ? 'activeButton' : ''}|">
                     <span>Yes</span>
@@ -40,9 +43,24 @@
                    th:classappend="|${indoorFilter == 'no' ? 'activeButton' : ''}|">
                     <span>No</span>
                 </a>
-                <a class="buttonLook filterButton" th:href="@{'/venuelist/indoor/all'}"
-                   th:classappend="|${indoorFilter == 'all' ? 'activeButton' : ''}|">
+            </div>
+            <div class="capacityButtons">
+                <p>Capacity: </p>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/capacity/all'}"
+                   th:classappend="|${capacityFilter == 'all' ? 'activeButton' : ''}|">
                     <span>All</span>
+                </a>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/capacity/S'}"
+                   th:classappend="|${capacityFilter == 'S' ? 'activeButton' : ''}|">
+                    <span>S</span>
+                </a>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/capacity/M'}"
+                   th:classappend="|${capacityFilter == 'M' ? 'activeButton' : ''}|">
+                    <span>M</span>
+                </a>
+                <a class="buttonLook filterButton" th:href="@{'/venuelist/capacity/L'}"
+                   th:classappend="|${capacityFilter == 'L' ? 'activeButton' : ''}|">
+                    <span>L</span>
                 </a>
             </div>
         </div>

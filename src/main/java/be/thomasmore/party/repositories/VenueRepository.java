@@ -6,4 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 public interface VenueRepository extends CrudRepository<Venue, Integer> {
     Iterable<Venue> findByOutdoor(boolean isOutdoor);
     Iterable<Venue> findByIndoor(boolean isIndoor);
+    Iterable<Venue> findByCapacityLessThanEqual(int capacity);
+    Iterable<Venue> findByCapacityGreaterThan(int capacity);
 }
