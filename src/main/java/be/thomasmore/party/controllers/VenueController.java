@@ -21,19 +21,14 @@ public class VenueController {
 
     @GetMapping({"/venuelist", "venuelist/{filter}"})
     public String venueList(Model model, @PathVariable(required = false) String filter,
-                                         @RequestParam(required = false) Integer minimumCapacity) {
+                                         @RequestParam(required = false) Integer minimumCapacity,
+                                         @RequestParam(required = false) Integer maximumCapacity) {
 
         model.addAttribute("numVenues", venueRepository.count());
         filter = oppositeFilter(filter);
         model.addAttribute("filter", filter);
-        Iterable<Venue> venues;
-        if(minimumCapacity == null){
-            venues = venueRepository.findAll();
-        } else{
-            venues = venueRepository.findByCapacityGreaterThan(minimumCapacity);
-        }
+        Iterable<Venue> venues = venueRepository.findByCapacity(minimumCapacity, maximumCapacity);
         model.addAttribute("venues", venues);
-        System.out.print(minimumCapacity);
         return "venuelist";
     }
 
