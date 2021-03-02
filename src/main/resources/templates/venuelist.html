@@ -11,18 +11,18 @@
 <div class="pageContent">
 <div class="row1">
     <h2>Venues</h2>
-    <div class="filters" th:if="${filter=='hide'}">
-        <a class="buttonLook filterButton" th:href="@{'/venuelist/'+${filter}}">+</a>
-    </div>
-    <div class="filters" th:if="${filter=='show'}">
-        <a class="buttonLook filterButton" th:href="@{'/venuelist/'+${filter}}">-</a>
-        <p>Hier komen de filters</p>
+    <p class="info" th:text="|${numVenues} venues found|">Number of venues</p>
+    <div class="filters">
+        <a class="buttonLook filterButton" th:href="@{'/venuelist/'+${filter}}"
+           th:text="${filter=='hide' ? '-' : '+'}">-</a>
+        <p th:if="${filter=='hide'}">Hier komen de filters</p>
     </div>
     <div class="row1content">
             <div class="venuelist">
                 <div th:each="venue, status: ${venues}">
                     <a class="buttonLook mediumButton" th:href="@{'/venuedetails/'+${status.index + 1}}">
                         <span th:text="${venue.getVenueName()}">Venue name</span>
+                        <span class="info buttonInfo" th:text="|Capacity: ${venue.capacity}|"></span>
                     </a>
                 </div>
             </div>

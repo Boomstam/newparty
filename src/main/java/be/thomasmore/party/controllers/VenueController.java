@@ -16,23 +16,25 @@ public class VenueController {
     private VenueRepository venueRepository;
 
     private final static String show ="show", hide = "hide";
-    private String currentFilter = show;
+    //private String currentFilter = hide;
 
     @GetMapping({"/venuelist", "venuelist/{filter}"})
     public String venueList(Model model, @PathVariable(required = false) String filter) {
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
-        if(filter==null)return "venuelist";
-        flipFilter();
-        model.addAttribute("filter", currentFilter);
+        model.addAttribute("numVenues", venueRepository.count());
+        filter = oppositeFilter(filter);
+        model.addAttribute("filter", filter);
         return "venuelist";
     }
 
-    private void flipFilter(){
-        if(currentFilter.equals(show)){
-            currentFilter = hide;
-        } else {
-            currentFilter = show;
+    private String oppositeFilter(String filter){
+        if(filter==null || filter.equals(hide)){
+            return show;
         }
+        if(filter.equals(show)){
+            return hide;
+        }
+        return show;
     }
 }

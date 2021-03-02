@@ -120,3 +120,14 @@ img{
 .activeButton{
     background-color: #F1A5B5;
 }
+
+.info{
+    background-color: #FAFAD2;
+    display:block;
+    width: 150px;
+    text-align: center;
+}
+
+.buttonInfo{
+    margin: auto;
+}
