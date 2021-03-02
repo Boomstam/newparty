@@ -15,7 +15,19 @@
     <div class="filters">
         <a class="buttonLook filterButton" th:href="@{'/venuelist/'+${filter}}"
            th:text="${filter=='hide' ? '-' : '+'}">-</a>
-        <p th:if="${filter=='hide'}">Hier komen de filters</p>
+        <!--<p th:if="${filter=='hide'}">Hier komen de filters</p>-->
+        <div class="filters" th:if="${filter=='hide'}">
+            <form>
+                <div class="onefilter">
+                    <input type="submit" value="search" class="buttonLook">
+                </div>
+                <h3>capacity</h3>
+                <div class="onefilter">
+                    <label for="minCapacity" class="filtername">min</label>
+                    <input type="number" id="minCapacity" name="minimumCapacity" value="0" step="50"> <span>persons</span>
+                </div>
+            </form>
+        </div>
     </div>
     <div class="row1content">
             <div class="venuelist">

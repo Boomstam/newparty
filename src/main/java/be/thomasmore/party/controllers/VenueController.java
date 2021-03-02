@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Optional;
 
@@ -19,12 +20,20 @@ public class VenueController {
     //private String currentFilter = hide;
 
     @GetMapping({"/venuelist", "venuelist/{filter}"})
-    public String venueList(Model model, @PathVariable(required = false) String filter) {
-        Iterable<Venue> venues = venueRepository.findAll();
-        model.addAttribute("venues", venues);
+    public String venueList(Model model, @PathVariable(required = false) String filter,
+                                         @RequestParam(required = false) Integer minimumCapacity) {
+
         model.addAttribute("numVenues", venueRepository.count());
         filter = oppositeFilter(filter);
         model.addAttribute("filter", filter);
+        Iterable<Venue> venues;
+        if(minimumCapacity == null){
+            venues = venueRepository.findAll();
+        } else{
+            venues = venueRepository.findByCapacityGreaterThan(minimumCapacity);
+        }
+        model.addAttribute("venues", venues);
+        System.out.print(minimumCapacity);
         return "venuelist";
     }
 
