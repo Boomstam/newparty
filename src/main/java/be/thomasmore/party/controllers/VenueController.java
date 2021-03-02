@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 @Controller
@@ -23,11 +25,11 @@ public class VenueController {
     public String venueList(Model model, @PathVariable(required = false) String filter,
                                          @RequestParam(required = false) Integer minimumCapacity,
                                          @RequestParam(required = false) Integer maximumCapacity) {
-
-        model.addAttribute("numVenues", venueRepository.count());
         filter = oppositeFilter(filter);
         model.addAttribute("filter", filter);
         Iterable<Venue> venues = venueRepository.findByCapacity(minimumCapacity, maximumCapacity);
+        Collection venueColl = (Collection)venues;
+        model.addAttribute("numVenues", venueColl.size());
         model.addAttribute("venues", venues);
         return "venuelist";
     }
