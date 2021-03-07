@@ -1,13 +1,17 @@
 package be.thomasmore.party.controllers;
 
+import be.thomasmore.party.helpers.ShowHideToggler;
 import be.thomasmore.party.model.Artist;
+import be.thomasmore.party.model.Venue;
 import be.thomasmore.party.repositories.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Controller
@@ -15,10 +19,20 @@ public class ArtistController {
     @Autowired
     private ArtistRepository artistRepository;
 
-    @GetMapping("/artistlist")
-    public String artistList(Model model) {
+    @GetMapping({"/artistlist", "artistlist/{filter}"})
+    public String venueList(Model model, @PathVariable(required = false) String filter,
+                            @RequestParam(required = false) String keyword) {
+        filter = ShowHideToggler.oppositeFilter(filter);
+        model.addAttribute("filter", filter);
         Iterable<Artist> artists = artistRepository.findAll();
-        model.addAttribute("artists", artists);
+        Collection artistColl = (Collection)artists;
+        if (keyword != null) {
+            artists = artistRepository.findByKeyword(keyword);
+        }
+        artistColl = (Collection)artists;
+        model.addAttribute("numArtists", artistColl.size());
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("artists", artistColl);
         return "artistlist";
     }
 

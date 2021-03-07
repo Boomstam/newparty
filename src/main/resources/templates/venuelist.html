@@ -15,7 +15,6 @@
     <div class="filters">
         <a class="buttonLook filterButton" th:href="@{'/venuelist/'+${filter}}"
            th:text="${filter=='hide' ? '-' : '+'}">-</a>
-        <!--<p th:if="${filter=='hide'}">Hier komen de filters</p>-->
         <div class="filters" th:if="${filter=='hide'}">
             <form>
                 <div class="onefilter">
@@ -26,8 +25,23 @@
                     <label for="minCapacity" class="filtername">min</label>
                     <input type="number" id="minCapacity" name="minimumCapacity" value="0" step="50" min="0"> <span>persons</span>
                     <label for="maxCapacity" class="filtername">max</label>
-                    <input type="number" id="maxCapacity" name="maximumCapacity" value="0" step="50" min="0"> <span>persons</span>
+                    <input type="number" id="maxCapacity" name="maximumCapacity" value="10000" step="50" min="0"> <span>persons</span>
                 </div>
+                <h3>Distance to public transport</h3>
+                <div class="onefilter">
+                    <label for="maxDistance" class="filtername">max</label>
+                    <input type="number" id="maxDistance" name="maximumDistance" value="10" step="1" min="0"> <span>km</span>
+                </div>
+                <h3>Food provided</h3>
+                <div class="onefilter">
+                    <label for="foodProvidedYes" class="filtername">yes</label>
+                    <input type="radio" id="foodProvidedYes" name="foodProvided" value="yes">
+                    <label for="foodProvidedNo" class="filtername">no</label>
+                    <input type="radio" id="foodProvidedNo" name="foodProvided" value="no">
+                    <label for="foodProvidedAll" class="filtername">all</label>
+                    <input type="radio" id="foodProvidedAll" name="foodProvided" value="all" checked="checked">
+                </div>
+
             </form>
         </div>
     </div>

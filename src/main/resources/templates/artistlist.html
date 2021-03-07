@@ -10,6 +10,23 @@
 <div th:replace="fragments/header :: header">Hier komt de header</div>
 <div class="pageContent">
 <div class="row1">
+    <p class="info" th:text="|${numArtists} artists found|">Number of venues</p>
+    <div class="filters">
+        <a class="buttonLook filterButton" th:href="@{'/artistlist/'+${filter}}"
+           th:text="${filter=='hide' ? '-' : '+'}">-</a>
+        <div class="filters" th:if="${filter=='hide'}">
+            <form>
+                <div class="onefilter">
+                    <input type="submit" value="search" class="buttonLook">
+                </div>
+                <h3>search</h3>
+                <div class="onefilter">
+                    <label for="keyword" class="filtername">keyword</label>
+                    <input type="text" id="keyword" name="keyword" th:value="${keyword}"> <span>search</span>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="row1content">
         <h2>Artists</h2>
             <div class="artistlist">

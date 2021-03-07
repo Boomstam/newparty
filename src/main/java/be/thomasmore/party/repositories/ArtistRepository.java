@@ -9,6 +9,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ArtistRepository extends CrudRepository<Artist, Integer> {
-    /*@Query("SELECT a FROM Artist a WHERE a.artistName LIKE :keyword")
-    List<Artist> findByCapacity(@Param("min") String keyword);*/
+    @Query("SELECT a FROM Artist a WHERE lower(a.artistName) LIKE concat('%', lower(:keyword), '%') OR " +
+            "lower(a.bio) LIKE concat('%', lower(:keyword), '%') OR " +
+            "lower(a.genre) LIKE concat('%', lower(:keyword), '%') OR " +
+            "lower(a.portfolio) LIKE concat('%', lower(:keyword), '%')")
+    List<Artist> findByKeyword(@Param("keyword") String keyword);
 }
