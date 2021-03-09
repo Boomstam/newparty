@@ -34,6 +34,17 @@
                         <a class="buttonLook menuButton" th:href="@{|/artistdetails/${previd}|}">Prev</a>
                         <a class="buttonLook menuButton" th:href="@{|/artistdetails/${nextid}|}">Next</a>
                     </div>
+                    <h2 th:text="|Parties by ${artist.artistName}|"/>
+                    <div th:if="${hasParties}" class="partyartistlist">
+                        <div th:each="party, status: ${artist.parties}">
+                            <a class="buttonLook mediumButton" th:href="@{'/partydetails/'+${party.id}}">
+                                <span th:text="${party.name}">Party name</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div th:unless="${hasParties}">
+                        <p>No known parties for this artist</p>
+                    </div>
                 </div>
             </div>
         </div>

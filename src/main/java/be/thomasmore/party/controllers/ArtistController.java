@@ -2,6 +2,7 @@ package be.thomasmore.party.controllers;
 
 import be.thomasmore.party.helpers.ShowHideToggler;
 import be.thomasmore.party.model.Artist;
+import be.thomasmore.party.model.Party;
 import be.thomasmore.party.model.Venue;
 import be.thomasmore.party.repositories.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,12 +46,16 @@ public class ArtistController {
         catch (NumberFormatException e)
         {
         }
-        Optional<Artist> artist = artistRepository.findById(id);
-        if(artist.isPresent()){
-            model.addAttribute("artist", artist.get());
+        Optional<Artist> artistWrapper = artistRepository.findById(id);
+        boolean hasParties = false;
+        if(artistWrapper.isPresent()){
+            Artist artist = artistWrapper.get();
+            model.addAttribute("artist", artist);
+            hasParties = artist.getParties().isEmpty() == false;
         } else {
             model.addAttribute("artist", null);
         }
+        model.addAttribute("hasParties", hasParties);
         int numArtists = (int)artistRepository.count();
         model.addAttribute("previd", (id>=1 && id <= numArtists) ? (id>1 ? id-1 : numArtists) : null);
         model.addAttribute("nextid", (id>=1 && id <= numArtists) ? (id<numArtists ? id+1 : 1) : null);
