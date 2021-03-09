@@ -19,17 +19,15 @@
                         <p th:text="|${party.extraInfo}|"/>
                     </div>
                     <div class="infoLine">
-                        <p th:text="|Info:|"/>
-                        <p th:text="|${party.extraInfo}|"/>
+                        <p th:text="|Price:|"/>
+                        <p th:unless="${party.priceInEur == null}" th:text="|${party.pricePresaleInEur} € (presale) /
+                         ${party.priceInEur} €|"/>
+                        <p th:if="${party.priceInEur == null}">Free Entrance</p>
                     </div>
-                    <div class="infoLine">
-                        <p th:text="|Presale:|"/>
-                        <p th:text="|${party.pricePresaleInEur}|"/>
-                    </div>
-                    <div class="infoLine">
+                    <!--<div class="infoLine">
                         <p th:text="|Price:|"/>
                         <p th:text="|${party.priceInEur}|"/>
-                    </div>
+                    </div>-->
                     <div class="infoLine">
                         <p th:text="|Date:|"/>
                         <p th:text="|${party.date}|"/>
