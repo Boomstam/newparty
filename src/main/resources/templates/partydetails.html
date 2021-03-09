@@ -1,0 +1,55 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Party Details</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/styles.css}" href="/css/styles.css" />
+</head>
+<body>
+<div>
+    <div th:replace="fragments/header :: header">Hier komt de header</div>
+    <div class="pageContent">
+        <div class="row1">
+            <div class="row1content">
+                <h2 th:unless="${party != null}">Party onbekend</h2>
+                <div th:if="${party != null}">
+                    <h2 th:text="|Party: ${party.name}|"/>
+                    <div class="infoLine">
+                        <p th:text="|Info:|"/>
+                        <p th:text="|${party.extraInfo}|"/>
+                    </div>
+                    <div class="infoLine">
+                        <p th:text="|Info:|"/>
+                        <p th:text="|${party.extraInfo}|"/>
+                    </div>
+                    <div class="infoLine">
+                        <p th:text="|Presale:|"/>
+                        <p th:text="|${party.pricePresaleInEur}|"/>
+                    </div>
+                    <div class="infoLine">
+                        <p th:text="|Price:|"/>
+                        <p th:text="|${party.priceInEur}|"/>
+                    </div>
+                    <div class="infoLine">
+                        <p th:text="|Date:|"/>
+                        <p th:text="|${party.date}|"/>
+                    </div>
+                    <div class="infoLine">
+                        <p th:text="|Doors:|"/>
+                        <p th:text="|${party.doors}|"/>
+                    </div>
+                    <div class="infoLine">
+                        <p th:text="|Venue:|"/>
+                        <p th:text="|${party.venue.venueName}|"/>
+                    </div>
+                    <div class="cycleButtons">
+                        <a class="buttonLook menuButton" th:href="@{|/partydetails/${previd}|}">Prev</a>
+                        <a class="buttonLook menuButton" th:href="@{|/partydetails/${nextid}|}">Next</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/footer :: footer">Hier komt de footer</div>
+</div>
+</body>

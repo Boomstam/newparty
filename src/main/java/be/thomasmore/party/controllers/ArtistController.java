@@ -20,7 +20,7 @@ public class ArtistController {
     private ArtistRepository artistRepository;
 
     @GetMapping({"/artistlist", "artistlist/{filter}"})
-    public String venueList(Model model, @PathVariable(required = false) String filter,
+    public String artistList(Model model, @PathVariable(required = false) String filter,
                             @RequestParam(required = false) String keyword) {
         filter = ShowHideToggler.oppositeFilter(filter);
         model.addAttribute("filter", filter);

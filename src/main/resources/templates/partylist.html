@@ -1,0 +1,45 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Party</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/styles.css}" href="/css/styles.css" />
+</head>
+<body>
+<div th:replace="fragments/header :: header">Hier komt de header</div>
+<div class="pageContent">
+    <div class="row1">
+        <p class="info" th:text="|${numParties} parties found|">Number of parties</p>
+        <div class="filters">
+            <a class="buttonLook filterButton" th:href="@{'/partylist/'+${filter}}"
+               th:text="${filter=='hide' ? '-' : '+'}">-</a>
+            <div class="filters" th:if="${filter=='hide'}">
+                <form>
+                    <div class="onefilter">
+                        <input type="submit" value="search" class="buttonLook">
+                    </div>
+                    <h3>search</h3>
+                    <div class="onefilter">
+                        <label for="keyword" class="filtername">keyword</label>
+                        <input type="text" id="keyword" name="keyword" th:value="${keyword}"> <span>search</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row1content">
+            <h2>Parties</h2>
+            <div class="partylist">
+                <div th:each="party, status: ${parties}">
+                    <a class="buttonLook mediumButton" th:href="@{'/partydetails/'+${status.index + 1}}">
+                        <span th:text="${party.name}">party name</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer">Hier komt de footer</div>
+</body>
+</html>
+
