@@ -51,6 +51,15 @@
                     <div th:unless="${hasArtists}">
                         <p>No artists are known at this time</p>
                     </div>
+                    <h2>Who goes?</h2>
+                    <div th:if="${hasAnimals}" class="partyanimalslist">
+                        <div th:each="animal, status: ${party.animals}">
+                            <span class="buttonLook mediumButton" th:text="${animal.name}">Animal name</span>
+                        </div>
+                    </div>
+                    <div th:unless="${hasAnimals}">
+                        <p>No animals are known to attend this party</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -45,14 +45,17 @@ public class PartyController {
         }
         Optional<Party> partyWrapper = partyRepository.findById(id);
         boolean hasArtists = false;
+        boolean hasAnimals = false;
         if(partyWrapper.isPresent()){
             Party party = partyWrapper.get();
             model.addAttribute("party", party);
             hasArtists = party.getArtists().isEmpty() == false;
+            hasAnimals = party.getAnimals().isEmpty() == false;
         } else {
             model.addAttribute("party", null);
         }
         model.addAttribute("hasArtists", hasArtists);
+        model.addAttribute("hasAnimals", hasAnimals);
         int numParties = (int) partyRepository.count();
         model.addAttribute("previd", (id>=1 && id <= numParties) ? (id>1 ? id-1 : numParties) : null);
         model.addAttribute("nextid", (id>=1 && id <= numParties) ? (id<numParties ? id+1 : 1) : null);
