@@ -53,7 +53,7 @@
                 <h2>Parties in this venue</h2>
                 <div th:if="${hasParties}" class="venuepartylist">
                     <div th:each="party, status: ${parties}">
-                        <a class="buttonLook mediumButton" th:href="@{'/partydetails/'+${status.index + 1}}">
+                        <a class="buttonLook mediumButton" th:href="@{'/partydetails/'+${party.id}}">
                             <span th:text="${party.name}">Party name</span>
                         </a>
                     </div>

@@ -136,4 +136,8 @@ public class Venue {
     private String boolAsYesOrNo(boolean bool){
         return bool ? trueWord : falseWord;
     }
+
+    public int getId() {
+        return id;
+    }
 }

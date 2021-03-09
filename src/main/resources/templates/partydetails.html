@@ -34,11 +34,22 @@
                     </div>
                     <div class="infoLine">
                         <p th:text="|Venue:|"/>
-                        <p th:text="|${party.venue.venueName}|"/>
+                        <a th:href="@{|/venuedetails/${party.venue.id}|}" th:text="|${party.venue.venueName}|"/>
                     </div>
                     <div class="cycleButtons">
                         <a class="buttonLook menuButton" th:href="@{|/partydetails/${previd}|}">Prev</a>
                         <a class="buttonLook menuButton" th:href="@{|/partydetails/${nextid}|}">Next</a>
+                    </div>
+                    <h2>Line-up</h2>
+                    <div th:if="${hasArtists}" class="partyartistlist">
+                        <div th:each="artist, status: ${party.artists}">
+                            <a class="buttonLook mediumButton" th:href="@{'/artistdetails/'+${artist.id}}">
+                                <span th:text="${artist.artistName}">Artist name</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div th:unless="${hasArtists}">
+                        <p>No artists are known at this time</p>
                     </div>
                 </div>
             </div>

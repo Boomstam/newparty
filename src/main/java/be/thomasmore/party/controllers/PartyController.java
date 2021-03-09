@@ -43,12 +43,16 @@ public class PartyController {
         catch (NumberFormatException e)
         {
         }
-        Optional<Party> party = partyRepository.findById(id);
-        if(party.isPresent()){
-            model.addAttribute("party", party.get());
+        Optional<Party> partyWrapper = partyRepository.findById(id);
+        boolean hasArtists = false;
+        if(partyWrapper.isPresent()){
+            Party party = partyWrapper.get();
+            model.addAttribute("party", party);
+            hasArtists = party.getArtists().isEmpty() == false;
         } else {
             model.addAttribute("party", null);
         }
+        model.addAttribute("hasArtists", hasArtists);
         int numParties = (int) partyRepository.count();
         model.addAttribute("previd", (id>=1 && id <= numParties) ? (id>1 ? id-1 : numParties) : null);
         model.addAttribute("nextid", (id>=1 && id <= numParties) ? (id<numParties ? id+1 : 1) : null);
