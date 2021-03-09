@@ -1,7 +1,9 @@
 package be.thomasmore.party.controllers;
 
 import be.thomasmore.party.helpers.ShowHideToggler;
+import be.thomasmore.party.model.Party;
 import be.thomasmore.party.model.Venue;
+import be.thomasmore.party.repositories.PartyRepository;
 import be.thomasmore.party.repositories.VenueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -19,6 +22,8 @@ import java.util.logging.Logger;
 public class VenueController {
     @Autowired
     private VenueRepository venueRepository;
+    @Autowired
+    private PartyRepository partyRepository;
 
     @GetMapping({"/venuelist", "venuelist/{filter}"})
     public String venueList(Model model, @PathVariable(required = false) String filter,
@@ -80,6 +85,10 @@ public class VenueController {
         int numVenues = (int)venueRepository.count();
         model.addAttribute("previd", (id>=1 && id <= numVenues) ? (id>1 ? id-1 : numVenues) : null);
         model.addAttribute("nextid", (id>=1 && id <= numVenues) ? (id<numVenues ? id+1 : 1) : null);
+        List<Party> parties = partyRepository.findByVenue(venue);
+        boolean hasParties = parties.isEmpty() == false;
+        model.addAttribute("parties", parties);
+        model.addAttribute("hasParties", hasParties);
         return "venuedetails";
     }
 }

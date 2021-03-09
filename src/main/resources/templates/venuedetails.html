@@ -50,6 +50,17 @@
                 <a class="buttonLook menuButton" th:href="@{|/venuedetails/${previd}|}">Prev</a>
                 <a class="buttonLook menuButton" th:href="@{|/venuedetails/${nextid}|}">Next</a>
                 </div>
+                <h2>Parties in this venue</h2>
+                <div th:if="${hasParties}" class="venuepartylist">
+                    <div th:each="party, status: ${parties}">
+                        <a class="buttonLook mediumButton" th:href="@{'/partydetails/'+${status.index + 1}}">
+                            <span th:text="${party.name}">Party name</span>
+                        </a>
+                    </div>
+                </div>
+                <div th:unless="${hasParties}">
+                    <p>No parties planned for now</p>
+                </div>
             </div>
             <!--<p th:unless="${venue.venueName}">venue: onbekend</p>-->
             <!--
