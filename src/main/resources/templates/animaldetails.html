@@ -1,0 +1,46 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Animal Details</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/styles.css}" href="/css/styles.css" />
+</head>
+<body>
+<div>
+    <div th:replace="fragments/header :: header">Hier komt de header</div>
+    <div class="pageContent">
+        <div class="row1">
+            <div class="row1content">
+                <h2 th:unless="${animal != null}">Animal onbekend</h2>
+                <div th:if="${animal != null}">
+                    <h2 th:text="|Animal: ${animal.name}|"/>
+                    <div class="infoLine">
+                        <p th:text="|City:|"/>
+                        <p th:text="|${animal.city}|"/>
+                    </div>
+                    <div class="infoLine">
+                        <p th:text="|Bio:|"/>
+                        <p th:text="|${animal.bio}|"/>
+                    </div>
+                    <div class="cycleButtons">
+                        <a class="buttonLook menuButton" th:href="@{|/animaldetails/${previd}|}">Prev</a>
+                        <a class="buttonLook menuButton" th:href="@{|/animaldetails/${nextid}|}">Next</a>
+                    </div>
+                    <h2>Going to</h2>
+                    <div th:if="${hasParties}" class="animalpartylist">
+                        <div th:each="party, status: ${animal.parties}">
+                            <a class="buttonLook mediumButton" th:href="@{'/partydetails/'+${party.id}}">
+                                <span th:text="${party.name}">Party name</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div th:unless="${hasParties}">
+                        <p>This animal has no parties planned</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/footer :: footer">Hier komt de footer</div>
+</div>
+</body>

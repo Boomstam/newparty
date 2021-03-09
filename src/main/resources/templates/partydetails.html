@@ -54,7 +54,9 @@
                     <h2>Who goes?</h2>
                     <div th:if="${hasAnimals}" class="partyanimalslist">
                         <div th:each="animal, status: ${party.animals}">
-                            <span class="buttonLook mediumButton" th:text="${animal.name}">Animal name</span>
+                            <a class="buttonLook mediumButton" th:href="@{'/animaldetails/'+${animal.id}}">
+                                <span th:text="${animal.name}">Animal name</span>
+                            </a>
                         </div>
                     </div>
                     <div th:unless="${hasAnimals}">

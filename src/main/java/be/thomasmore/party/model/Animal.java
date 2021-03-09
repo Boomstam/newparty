@@ -60,4 +60,11 @@ public class Animal {
     public void setParties(Collection<Party> parties) {
         this.parties = parties;
     }
+
+    public boolean hasParties(){
+        if(parties == null || parties.isEmpty()){
+            return false;
+        }
+        return true;
+    }
 }
