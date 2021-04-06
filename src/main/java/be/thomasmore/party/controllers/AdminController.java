@@ -19,28 +19,25 @@ public class AdminController {
 
     private Logger logger = LoggerFactory.getLogger(AdminController.class);
 
+    @ModelAttribute("party")
+    public Party findParty(@PathVariable Integer id) {
+        logger.info("findParty "+id);
+        Optional<Party> optionalParty = partyRepository.findById(id);
+        if (optionalParty.isPresent()) return optionalParty.get();
+        return null;
+    }
+
     @GetMapping("/partyedit/{id}")
     public String partyEdit(Model model, @PathVariable int id) {
-        logger.info("partyedit" + id);
-        Optional<Party> optionalParty = partyRepository.findById(id);
-        if (optionalParty.isPresent()) {
-            model.addAttribute("party", optionalParty.get());
-        }
+        logger.info("partyedit : "+id);
         return "admin/partyedit";
     }
 
     @PostMapping("/partyedit/{id}")
     public String partyEditPost(Model model, @PathVariable int id, @ModelAttribute("party") Party party) {
-        logger.info("partyEditPost " + id + " -- new name=" + party.getName() + ", date=" + party.getDate());
-        Optional<Party> optionalParty = partyRepository.findById(id);
-        if (optionalParty.isPresent()) {
-            Party editedParty = optionalParty.get();
-            editedParty.setName(party.getName());
-            editedParty.setPriceInEur(party.getPriceInEur());
-            editedParty.setPricePresaleInEur(party.getPricePresaleInEur());
-            editedParty.setExtraInfo(party.getExtraInfo());
-            partyRepository.save(editedParty);
-        }
+        logger.info("partyEditPost " + id + " -- new name=" + party.getName());
+
+        partyRepository.save(party);
         return "redirect:/partydetails/"+id;
     }
 }
