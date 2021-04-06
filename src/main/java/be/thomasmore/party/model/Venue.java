@@ -25,6 +25,11 @@ public class Venue {
         this(venueOnbekend, "");
     }
 
+    public Venue(int id) {
+        this(venueOnbekend, "");
+        this.id = id;
+    }
+
     public Venue(String venueName, String linkMoreInfo) {
         this.venueName = venueName;
         this.linkMoreInfo = linkMoreInfo;

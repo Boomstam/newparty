@@ -47,8 +47,11 @@ public class AdminController {
                                 @RequestParam Integer venueID) {
         logger.info("partyEditPost " + id + " -- new name=" + party.getName()
            + " -- venueID" + venueID);
-        Optional<Venue> optionalVenue = venueRepository.findById(venueID);
-        party.setVenue(optionalVenue.get());
+        if (venueID!=party.getVenue().getId()) {
+            party.setVenue(new Venue(venueID));
+        }
+        /*Optional<Venue> optionalVenue = venueRepository.findById(venueID);
+        party.setVenue(optionalVenue.get());*/
         partyRepository.save(party);
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
