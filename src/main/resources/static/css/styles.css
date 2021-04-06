@@ -106,6 +106,18 @@ img{
     padding: 10px;
 }
 
+.error {
+    color: red;
+}
+
+.fieldError{
+    background-color: red;
+}
+
+.fieldError:focus{
+    background-color: white;
+}
+
 .cycleButtons{
     display: flex;
 }

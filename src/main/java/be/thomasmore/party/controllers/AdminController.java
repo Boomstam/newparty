@@ -9,8 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -43,10 +45,13 @@ public class AdminController {
 
     @PostMapping("/partyedit/{id}")
     public String partyEditPost(Model model, @PathVariable int id,
-                                @ModelAttribute("party") Party party,
-                                @RequestParam Integer venueID) {
-        logger.info("partyEditPost " + id + " -- new name=" + party.getName()
-           + " -- venueID" + venueID);
+                                @Valid @ModelAttribute("party") Party party,
+                                BindingResult bindingResult, @RequestParam Integer venueID) {
+        logger.info("partyEditPost " + id + " -- new name=" + party.getName() + " -- venueID" + venueID);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("venues", venueRepository.findAll());
+            return "admin/partyedit";
+        }
         if (venueID!=party.getVenue().getId()) {
             party.setVenue(new Venue(venueID));
         }
@@ -64,9 +69,13 @@ public class AdminController {
     }
 
     @PostMapping("/partynew")
-    public String partyNewPost(Model model, @ModelAttribute("party") Party party,
-                               @RequestParam Integer venueID) {
+    public String partyNewPost(Model model, @Valid @ModelAttribute("party") Party party,
+                               BindingResult bindingResult, @RequestParam Integer venueID) {
         logger.info("partyNewPost -- new name=" + party.getName() + ", date=" + party.getDate());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("venues", venueRepository.findAll());
+            return "admin/partynew";
+        }
         party.setVenue(new Venue(venueID));
         partyRepository.save(party);
         Integer id = party.getId();
