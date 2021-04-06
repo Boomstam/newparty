@@ -40,6 +40,11 @@
                         <p th:text="|${party.doors}|"/>
                     </div>
                     <div class="infoLine">
+                        <p th:text="|Extra info:|"/>
+                        <p th:unless="${party.extraInfo == null || party.extraInfo.isBlank()}" th:text="|${party.extraInfo}|"/>
+                        <p th:if="${party.extraInfo == null || party.extraInfo.isBlank()}" th:text="|No extra info|"/>
+                    </div>
+                    <div class="infoLine">
                         <p th:text="|Venue:|"/>
                         <a th:href="@{|/venuedetails/${party.venue.id}|}" th:text="|${party.venue.venueName}|"/>
                     </div>

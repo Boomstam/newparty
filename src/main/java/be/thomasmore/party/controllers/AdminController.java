@@ -30,12 +30,17 @@ public class AdminController {
     }
 
     @PostMapping("/partyedit/{id}")
-    public String partyEditPost(Model model, @PathVariable int id, @RequestParam String partyName) {
+    public String partyEditPost(Model model, @PathVariable int id, @RequestParam String partyName,
+                                @RequestParam Integer price, @RequestParam Integer presalePrice, @RequestParam String extraInfo) {
         logger.info("partyeditpost : " + id + " -- new name: " + partyName);
+        logger.info("price : " + price + " -- new presalePrice: " + presalePrice + " -- new extraInfo: " + extraInfo);
         Optional<Party> optionalParty = partyRepository.findById(id);
         if (optionalParty.isPresent()) {
             Party party = optionalParty.get();
             party.setName(partyName);
+            party.setPriceInEur(price);
+            party.setPricePresaleInEur(presalePrice);
+            party.setExtraInfo(extraInfo);
             partyRepository.save(party);
             model.addAttribute("party", party);
         }

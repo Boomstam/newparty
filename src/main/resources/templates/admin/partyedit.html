@@ -11,6 +11,7 @@
     <div class="pageContent">
         <div class="row1">
             <div class="row1content">
+
                 <h2 th:unless="${party != null}">Party onbekend</h2>
                 <div th:if="${party != null}">
                     <form class="editForm" th:action="@{|/admin/partyedit/${party.id}|}" method="post">
@@ -24,22 +25,31 @@
                             <input name="partyName" id="partyName" th:value="${party.name}">
                         </div>
                         <div class="infoLine">
-                            <p th:text="|Price:|"/>
-                            <p th:unless="${party.priceInEur == null}" th:text="|${party.pricePresaleInEur} € (presale) /
-                             ${party.priceInEur} €|"/>
-                            <p th:if="${party.priceInEur == null}">Free Entrance</p>
-                        </div>
-                        <div class="infoLine">
                             <p th:text="|Date:|"/>
                             <p th:text="|${party.date}|"/>
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Venue:|"/>
+                            <a th:href="@{|/venuedetails/${party.venue.id}|}" th:text="|${party.venue.venueName}|"/>
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Price:|"/>
+                            <input type="number" name="price" th:value="|${party.priceInEur}|"/>
+                            <p class="editEuroSign">€</p>
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Presale price:|"/>
+                            <input type="number" name="presalePrice" th:value="|${party.pricePresaleInEur}|"/>
+                            <p class="editEuroSign">€</p>
                         </div>
                         <div class="infoLine">
                             <p th:text="|Doors:|"/>
                             <p th:text="|${party.doors}|"/>
                         </div>
                         <div class="infoLine">
-                            <p th:text="|Venue:|"/>
-                            <a th:href="@{|/venuedetails/${party.venue.id}|}" th:text="|${party.venue.venueName}|"/>
+                            <p th:text="|Extra info:|"/>
+                            <textarea class="editExtraInfo" name="extraInfo" th:text="|${party.extraInfo}|" rows="10" cols="50">
+                            </textarea>
                         </div>
                     </form>
                 </div>
