@@ -52,7 +52,7 @@ public class AdminController {
     public String partyEditPost(Model model, @PathVariable int id,
                                 @Valid @ModelAttribute("party") Party party,
                                 BindingResult bindingResult, @RequestParam Integer venueID,
-                                @RequestParam Integer[] artistIDs) {
+                                @RequestParam(required = false) Integer[] artistIDs) {
         logger.info("partyEditPost " + id + " -- new name=" + party.getName() + " -- venueID" + venueID);
         if (bindingResult.hasErrors()) {
             model.addAttribute("artists", artistRepository.findAll());
@@ -81,8 +81,8 @@ public class AdminController {
     @PostMapping("/partynew")
     public String partyNewPost(Model model, @Valid @ModelAttribute("party") Party party,
                                BindingResult bindingResult, @RequestParam Integer venueID,
-                               @RequestParam Integer[] artistIDs) {
-        logger.info("partyNewPost -- new name=" + party.getName() + ", artistIDs=" + artistIDs.length);
+                               @RequestParam(required = false) Integer[] artistIDs) {
+        logger.info("partyNewPost -- new name=" + party.getName());
         model.addAttribute("artists", artistRepository.findAll());
         model.addAttribute("venues", venueRepository.findAll());
         if (bindingResult.hasErrors()) {
