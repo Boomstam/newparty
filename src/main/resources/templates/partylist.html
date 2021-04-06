@@ -28,7 +28,10 @@
             </div>
         </div>
         <div class="row1content">
-            <h2>Parties</h2>
+            <div class="listHeader">
+                <h2>Parties</h2>
+                <a class="buttonLook headerButton newButton" href="/admin/partynew">New</a>
+            </div>
             <div class="partylist">
                 <div th:each="party, status: ${parties}">
                     <a class="buttonLook mediumButton" th:href="@{'/partydetails/'+${status.index + 1}}">

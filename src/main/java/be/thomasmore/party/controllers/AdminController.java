@@ -24,13 +24,13 @@ public class AdminController {
     private Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     @ModelAttribute("party")
-    public Party findParty(@PathVariable Integer id) {
+    public Party findParty(@PathVariable(required = false) Integer id) {
         logger.info("findParty " + id);
-        Optional<Party> optionalParty = partyRepository.findById(id);
-        if (optionalParty.isPresent()){
-            return optionalParty.get();
+        if (id!=null) {
+            Optional<Party> optionalParty = partyRepository.findById(id);
+            if (optionalParty.isPresent()) return optionalParty.get();
         }
-        return null;
+        return new Party();
     }
 
     @GetMapping("/partyedit/{id}")
@@ -50,11 +50,26 @@ public class AdminController {
         if (venueID!=party.getVenue().getId()) {
             party.setVenue(new Venue(venueID));
         }
-        /*Optional<Venue> optionalVenue = venueRepository.findById(venueID);
-        party.setVenue(optionalVenue.get());*/
         partyRepository.save(party);
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
         return "redirect:/partydetails/"+id;
+    }
+
+    @GetMapping("/partynew")
+    public String partyNew(Model model) {
+        logger.info("partynew");
+        model.addAttribute("venues", venueRepository.findAll());
+        return "admin/partynew";
+    }
+
+    @PostMapping("/partynew")
+    public String partyNewPost(Model model, @ModelAttribute("party") Party party,
+                               @RequestParam Integer venueID) {
+        logger.info("partyNewPost -- new name=" + party.getName() + ", date=" + party.getDate());
+        party.setVenue(new Venue(venueID));
+        partyRepository.save(party);
+        Integer id = party.getId();
+        return "redirect:/partydetails/" + id;
     }
 }

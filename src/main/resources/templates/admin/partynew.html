@@ -1,7 +1,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Party Edit</title>
+    <title>Party New</title>
     <link rel="stylesheet" type="text/css" media="all"
           th:href="@{/css/styles.css}" href="/css/styles.css" />
 </head>
@@ -11,12 +11,11 @@
     <div class="pageContent">
         <div class="row1">
             <div class="row1content" th:object="${party}">
-                <h2 th:unless="${party != null}">Party onbekend</h2>
-                <div th:if="${party != null}">
-                    <form class="editForm" th:action="@{|/admin/partyedit/${party.id}|}" method="post">
+                <div>
+                    <form class="editForm" action="/admin/partynew" method="post" th:object="${party}">
                         <div class="editHeader">
-                            <h2 th:text="|Party: ${party.name}|"/>
-                            <a class="buttonLook headerButton" th:href="@{|/partydetails/${party.id}|}">Back</a>
+                            <h2 th:text="|Nieuwe Party|"/>
+                            <a class="buttonLook headerButton" href="/partylist">Back</a>
                             <input class="buttonLook headerButton" type="submit" value="Save"/>
                         </div>
                         <div class="infoLine">
@@ -28,9 +27,9 @@
                             <input type="date" th:field="*{date}"/>
                         </div>
                         <p th:text="|Venue:|"/>
-                        <select name="venueID" th:value="|${party.venue.id}|">
+                        <select name="venueID" th:value="|${1}|">
                             <option th:each="venue, status: ${venues}" th:value="${venue.id}" th:text="${venue.venueName}"
-                                    th:selected="${venue.id==party.venue.id}"></option>
+                                    th:selected="${venue.id}"></option>
                         </select>
                         <div class="infoLine">
                             <p th:text="|Price:|"/>
