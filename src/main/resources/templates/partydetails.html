@@ -33,11 +33,11 @@
                     </div>
                     <div class="infoLine">
                         <p th:text="|Date:|"/>
-                        <p th:text="|${party.date}|"/>
+                        <p th:text="|*{#dates.format(party.date, 'dd-MM-yyyy')}|"/>
                     </div>
                     <div class="infoLine">
                         <p th:text="|Doors:|"/>
-                        <p th:text="${#temporals.format(party.doors, 'HH:mm')}"/>
+                        <p th:text="*{#dates.format(party.doors, 'HH:mm')}"/>
                     </div>
                     <div class="infoLine">
                         <p th:text="|Extra info:|"/>

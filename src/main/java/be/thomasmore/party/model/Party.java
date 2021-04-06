@@ -3,6 +3,9 @@ package be.thomasmore.party.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,7 +21,7 @@ public class Party {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "HH-mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date doors;
     @ManyToOne(fetch = FetchType.LAZY)
     private Venue venue;
@@ -85,6 +88,17 @@ public class Party {
 
     public void setDoors(Date doors) {
         this.doors = doors;
+    }
+
+    public String getDoorsHHmm(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(doors);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        DecimalFormat mFormat= new DecimalFormat("00");
+        mFormat.setRoundingMode(RoundingMode.DOWN);
+        String time = mFormat.format(Double.valueOf(hour)) + ":" + mFormat.format(Double.valueOf(minute));
+        return time;
     }
 
     public Venue getVenue() {
