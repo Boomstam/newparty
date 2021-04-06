@@ -28,7 +28,7 @@
                             <input th:field="*{date}"/>
                         </div>
                         <p th:text="|Venue:|"/>
-                        <select th:value="|${party.venue.id}|">
+                        <select name="venueID" th:value="|${party.venue.id}|">
                             <option th:each="venue, status: ${venues}" th:value="${venue.id}" th:text="${venue.venueName}"
                                     th:selected="${venue.id==party.venue.id}"></option>
                         </select>

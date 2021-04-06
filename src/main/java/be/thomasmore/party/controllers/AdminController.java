@@ -27,7 +27,9 @@ public class AdminController {
     public Party findParty(@PathVariable Integer id) {
         logger.info("findParty " + id);
         Optional<Party> optionalParty = partyRepository.findById(id);
-        if (optionalParty.isPresent()) return optionalParty.get();
+        if (optionalParty.isPresent()){
+            return optionalParty.get();
+        }
         return null;
     }
 
@@ -42,9 +44,11 @@ public class AdminController {
     @PostMapping("/partyedit/{id}")
     public String partyEditPost(Model model, @PathVariable int id,
                                 @ModelAttribute("party") Party party,
-                                @RequestParam String venueID) {
+                                @RequestParam Integer venueID) {
         logger.info("partyEditPost " + id + " -- new name=" + party.getName()
            + " -- venueID" + venueID);
+        Optional<Venue> optionalVenue = venueRepository.findById(venueID);
+        party.setVenue(optionalVenue.get());
         partyRepository.save(party);
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
