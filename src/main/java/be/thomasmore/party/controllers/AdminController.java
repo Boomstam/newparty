@@ -21,7 +21,7 @@ public class AdminController {
 
     @GetMapping("/partyedit/{id}")
     public String partyEdit(Model model, @PathVariable int id) {
-        logger.info("partyedit"+id);
+        logger.info("partyedit" + id);
         Optional<Party> optionalParty = partyRepository.findById(id);
         if (optionalParty.isPresent()) {
             model.addAttribute("party", optionalParty.get());
@@ -30,6 +30,20 @@ public class AdminController {
     }
 
     @PostMapping("/partyedit/{id}")
+    public String partyEditPost(Model model, @PathVariable int id, @ModelAttribute("party") Party party) {
+        logger.info("partyEditPost " + id + " -- new name=" + party.getName() + ", date=" + party.getDate());
+        Optional<Party> optionalParty = partyRepository.findById(id);
+        if (optionalParty.isPresent()) {
+            Party editedParty = optionalParty.get();
+            editedParty.setName(party.getName());
+            editedParty.setPriceInEur(party.getPriceInEur());
+            editedParty.setPricePresaleInEur(party.getPricePresaleInEur());
+            editedParty.setExtraInfo(party.getExtraInfo());
+            partyRepository.save(editedParty);
+        }
+        return "redirect:/partydetails/"+id;
+    }
+    /*@PostMapping("/partyedit/{id}")
     public String partyEditPost(Model model, @PathVariable int id, @RequestParam String partyName,
                                 @RequestParam Integer price, @RequestParam Integer presalePrice, @RequestParam String extraInfo) {
         logger.info("partyeditpost : " + id + " -- new name: " + partyName);
@@ -44,6 +58,6 @@ public class AdminController {
             partyRepository.save(party);
             model.addAttribute("party", party);
         }
-        return "admin/partyedit";
-    }
+        return "redirect:/partydetails/"+id;
+    }*/
 }

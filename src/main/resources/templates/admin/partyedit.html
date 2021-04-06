@@ -14,7 +14,7 @@
 
                 <h2 th:unless="${party != null}">Party onbekend</h2>
                 <div th:if="${party != null}">
-                    <form class="editForm" th:action="@{|/admin/partyedit/${party.id}|}" method="post">
+                    <form class="editForm" th:action="@{|/admin/partyedit/${party.id}|}" th:object="${party}" method="post">
                         <div class="editHeader">
                             <h2 th:text="|Party: ${party.name}|"/>
                             <a class="buttonLook headerButton" th:href="@{|/partydetails/${party.id}|}">Back</a>
@@ -22,7 +22,7 @@
                         </div>
                         <div class="infoLine">
                             <p th:text="|Name:|"/>
-                            <input name="partyName" id="partyName" th:value="${party.name}">
+                            <input id="partyName" th:field="*{name}">
                         </div>
                         <div class="infoLine">
                             <p th:text="|Date:|"/>
@@ -34,12 +34,12 @@
                         </div>
                         <div class="infoLine">
                             <p th:text="|Price:|"/>
-                            <input type="number" name="price" th:value="|${party.priceInEur}|"/>
+                            <input type="number" th:field="*{priceInEur}"/>
                             <p class="editEuroSign">€</p>
                         </div>
                         <div class="infoLine">
                             <p th:text="|Presale price:|"/>
-                            <input type="number" name="presalePrice" th:value="|${party.pricePresaleInEur}|"/>
+                            <input type="number" th:field="*{pricePresaleInEur}"/>
                             <p class="editEuroSign">€</p>
                         </div>
                         <div class="infoLine">
@@ -48,7 +48,7 @@
                         </div>
                         <div class="infoLine">
                             <p th:text="|Extra info:|"/>
-                            <textarea class="editExtraInfo" name="extraInfo" th:text="|${party.extraInfo}|" rows="10" cols="50">
+                            <textarea class="editExtraInfo" th:field="*{extraInfo}" rows="10" cols="50">
                             </textarea>
                         </div>
                     </form>
