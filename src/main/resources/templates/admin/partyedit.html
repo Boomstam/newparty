@@ -10,11 +10,10 @@
     <div th:replace="fragments/header :: header">Hier komt de header</div>
     <div class="pageContent">
         <div class="row1">
-            <div class="row1content">
-
+            <div class="row1content" th:object="${party}">
                 <h2 th:unless="${party != null}">Party onbekend</h2>
                 <div th:if="${party != null}">
-                    <form class="editForm" th:action="@{|/admin/partyedit/${party.id}|}" th:object="${party}" method="post">
+                    <form class="editForm" th:action="@{|/admin/partyedit/${party.id}|}" method="post">
                         <div class="editHeader">
                             <h2 th:text="|Party: ${party.name}|"/>
                             <a class="buttonLook headerButton" th:href="@{|/partydetails/${party.id}|}">Back</a>
@@ -53,7 +52,6 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
