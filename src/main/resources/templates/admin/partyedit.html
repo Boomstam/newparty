@@ -25,12 +25,13 @@
                         </div>
                         <div class="infoLine">
                             <p th:text="|Date:|"/>
-                            <input type="date" th:field="*{date}"/>
+                            <input th:field="*{date}"/>
                         </div>
-                        <div class="infoLine">
-                            <p th:text="|Venue:|"/>
-                            <a th:href="@{|/venuedetails/${party.venue.id}|}" th:text="|${party.venue.venueName}|"/>
-                        </div>
+                        <p th:text="|Venue:|"/>
+                        <select th:value="|${party.venue.id}|">
+                            <option th:each="venue, status: ${venues}" th:value="${venue.id}" th:text="${venue.venueName}"
+                                    th:selected="${venue.id==party.venue.id}"></option>
+                        </select>
                         <div class="infoLine">
                             <p th:text="|Price:|"/>
                             <input type="number" th:field="*{priceInEur}"/>

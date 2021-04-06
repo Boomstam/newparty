@@ -90,17 +90,6 @@ public class Party {
         this.doors = doors;
     }
 
-    public String getDoorsHHmm(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(doors);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        DecimalFormat mFormat= new DecimalFormat("00");
-        mFormat.setRoundingMode(RoundingMode.DOWN);
-        String time = mFormat.format(Double.valueOf(hour)) + ":" + mFormat.format(Double.valueOf(minute));
-        return time;
-    }
-
     public Venue getVenue() {
         return venue;
     }
