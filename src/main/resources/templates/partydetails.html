@@ -37,7 +37,7 @@
                     </div>
                     <div class="infoLine">
                         <p th:text="|Doors:|"/>
-                        <p th:text="|${party.doors}|"/>
+                        <p th:text="${#temporals.format(party.doors, 'HH:mm')}"/>
                     </div>
                     <div class="infoLine">
                         <p th:text="|Extra info:|"/>
