@@ -13,10 +13,17 @@
             <div class="row1content">
                 <h2 th:unless="${party != null}">Party onbekend</h2>
                 <div th:if="${party != null}">
-                    <h2 th:text="|Party: ${party.name}|"/>
-                    <div class="infoLine">
-                        <p th:text="|Info:|"/>
-                        <p th:text="|${party.extraInfo}|"/>
+                    <div class="partyHeader">
+                        <a class="buttonLook headerButton" th:href="@{|/partydetails/${previd}|}">
+                            <span>Prev</span>
+                        </a>
+                        <h2 th:text="|Party: ${party.name}|"/>
+                        <a class="buttonLook headerButton" th:href="@{|/admin/partyedit/${party.id}|}">
+                            <span>Edit</span>
+                        </a>
+                        <a class="buttonLook headerButton" th:href="@{|/partydetails/${nextid}|}">
+                            <span>Next</span>
+                        </a>
                     </div>
                     <div class="infoLine">
                         <p th:text="|Price:|"/>
@@ -35,10 +42,6 @@
                     <div class="infoLine">
                         <p th:text="|Venue:|"/>
                         <a th:href="@{|/venuedetails/${party.venue.id}|}" th:text="|${party.venue.venueName}|"/>
-                    </div>
-                    <div class="cycleButtons">
-                        <a class="buttonLook menuButton" th:href="@{|/partydetails/${previd}|}">Prev</a>
-                        <a class="buttonLook menuButton" th:href="@{|/partydetails/${nextid}|}">Next</a>
                     </div>
                     <h2>Line-up</h2>
                     <div th:if="${hasArtists}" class="partyartistlist">

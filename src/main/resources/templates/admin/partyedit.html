@@ -1,0 +1,53 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Party Edit</title>
+    <link rel="stylesheet" type="text/css" media="all"
+          th:href="@{/css/styles.css}" href="/css/styles.css" />
+</head>
+<body>
+<div>
+    <div th:replace="fragments/header :: header">Hier komt de header</div>
+    <div class="pageContent">
+        <div class="row1">
+            <div class="row1content">
+                <h2 th:unless="${party != null}">Party onbekend</h2>
+                <div th:if="${party != null}">
+
+                    <form class="editForm">
+                        <div class="editHeader">
+                            <h2 th:text="|Party: ${party.name}|"/>
+                            <a class="buttonLook headerButton" th:href="@{|/partydetails/${party.id}|}">Back</a>
+                            <input class="buttonLook headerButton" type="submit" value="Save"/>
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Name:|"/>
+                            <input name="partyName" id="partyName" th:value="${party.name}">
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Price:|"/>
+                            <p th:unless="${party.priceInEur == null}" th:text="|${party.pricePresaleInEur} € (presale) /
+                             ${party.priceInEur} €|"/>
+                            <p th:if="${party.priceInEur == null}">Free Entrance</p>
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Date:|"/>
+                            <p th:text="|${party.date}|"/>
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Doors:|"/>
+                            <p th:text="|${party.doors}|"/>
+                        </div>
+                        <div class="infoLine">
+                            <p th:text="|Venue:|"/>
+                            <a th:href="@{|/venuedetails/${party.venue.id}|}" th:text="|${party.venue.venueName}|"/>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div th:replace="fragments/footer :: footer">Hier komt de footer</div>
+</div>
+</body>

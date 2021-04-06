@@ -91,6 +91,16 @@ img{
     padding: 1em;
 }
 
+.partyHeader,
+.editHeader{
+    display: flex;
+}
+
+.headerButton{
+    margin: 20px;
+    padding: 10px;
+}
+
 .cycleButtons{
     display: flex;
 }
