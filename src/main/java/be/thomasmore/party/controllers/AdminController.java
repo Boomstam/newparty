@@ -1,7 +1,9 @@
 package be.thomasmore.party.controllers;
 
+import be.thomasmore.party.model.Artist;
 import be.thomasmore.party.model.Party;
 import be.thomasmore.party.model.Venue;
+import be.thomasmore.party.repositories.ArtistRepository;
 import be.thomasmore.party.repositories.PartyRepository;
 import be.thomasmore.party.repositories.VenueRepository;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 import java.util.Optional;
 
 @Controller
@@ -22,6 +25,8 @@ public class AdminController {
     private PartyRepository partyRepository;
     @Autowired
     private VenueRepository venueRepository;
+    @Autowired
+    private ArtistRepository artistRepository;
 
     private Logger logger = LoggerFactory.getLogger(AdminController.class);
 
@@ -38,23 +43,27 @@ public class AdminController {
     @GetMapping("/partyedit/{id}")
     public String partyEdit(Model model, @PathVariable int id) {
         logger.info("partyedit : " + id);
-        Iterable<Venue> venues = venueRepository.findAll();
-        model.addAttribute("venues", venues);
+        model.addAttribute("artists", artistRepository.findAll());
+        model.addAttribute("venues", venueRepository.findAll());
         return "admin/partyedit";
     }
 
     @PostMapping("/partyedit/{id}")
     public String partyEditPost(Model model, @PathVariable int id,
                                 @Valid @ModelAttribute("party") Party party,
-                                BindingResult bindingResult, @RequestParam Integer venueID) {
+                                BindingResult bindingResult, @RequestParam Integer venueID,
+                                @RequestParam Integer[] artistIDs) {
         logger.info("partyEditPost " + id + " -- new name=" + party.getName() + " -- venueID" + venueID);
         if (bindingResult.hasErrors()) {
+            model.addAttribute("artists", artistRepository.findAll());
             model.addAttribute("venues", venueRepository.findAll());
             return "admin/partyedit";
         }
         if (venueID!=party.getVenue().getId()) {
             party.setVenue(new Venue(venueID));
         }
+        Collection<Artist> artists = artistIDs==null ? null : artistRepository.findByIdIn(artistIDs);
+        party.setArtists(artists);
         partyRepository.save(party);
         Iterable<Venue> venues = venueRepository.findAll();
         model.addAttribute("venues", venues);
@@ -65,18 +74,23 @@ public class AdminController {
     public String partyNew(Model model) {
         logger.info("partynew");
         model.addAttribute("venues", venueRepository.findAll());
+        model.addAttribute("artists", artistRepository.findAll());
         return "admin/partynew";
     }
 
     @PostMapping("/partynew")
     public String partyNewPost(Model model, @Valid @ModelAttribute("party") Party party,
-                               BindingResult bindingResult, @RequestParam Integer venueID) {
-        logger.info("partyNewPost -- new name=" + party.getName() + ", date=" + party.getDate());
+                               BindingResult bindingResult, @RequestParam Integer venueID,
+                               @RequestParam Integer[] artistIDs) {
+        logger.info("partyNewPost -- new name=" + party.getName() + ", artistIDs=" + artistIDs.length);
+        model.addAttribute("artists", artistRepository.findAll());
+        model.addAttribute("venues", venueRepository.findAll());
         if (bindingResult.hasErrors()) {
-            model.addAttribute("venues", venueRepository.findAll());
             return "admin/partynew";
         }
         party.setVenue(new Venue(venueID));
+        Collection<Artist> artists = artistIDs==null ? null : artistRepository.findByIdIn(artistIDs);
+        party.setArtists(artists);
         partyRepository.save(party);
         Integer id = party.getId();
         return "redirect:/partydetails/" + id;

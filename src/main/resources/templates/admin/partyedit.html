@@ -48,6 +48,13 @@
                             <input type="time" th:field="*{doors}" th:errorclass="fieldError"/>
                         </div>
                         <div class="infoLine">
+                            <p th:text="|Artists:|"/>
+                            <select name="artistIDs" multiple="multiple">
+                                <option th:each="artist, status: ${artists}" th:value="${artist.id}" th:text="${artist.artistName}"
+                                        th:selected="${party.hasArtist(artist)}"></option>
+                            </select>
+                        </div>
+                        <div class="infoLine">
                             <p th:text="|Extra info:|"/>
                             <textarea class="editExtraInfo" th:field="*{extraInfo}" rows="10" cols="50">
                             </textarea>

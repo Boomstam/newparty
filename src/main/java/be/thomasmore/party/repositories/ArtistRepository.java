@@ -14,4 +14,6 @@ public interface ArtistRepository extends CrudRepository<Artist, Integer> {
             "lower(a.genre) LIKE concat('%', lower(:keyword), '%') OR " +
             "lower(a.portfolio) LIKE concat('%', lower(:keyword), '%')")
     List<Artist> findByKeyword(@Param("keyword") String keyword);
+
+    List<Artist> findByIdIn(Integer[] ids);
 }

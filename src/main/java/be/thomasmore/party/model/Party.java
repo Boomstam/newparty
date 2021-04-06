@@ -113,6 +113,10 @@ public class Party {
         this.artists = artists;
     }
 
+    public boolean hasArtist(Artist artist){
+        return artists.contains(artist);
+    }
+
     public Collection<Animal> getAnimals() {
         return animals;
     }
